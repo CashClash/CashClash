@@ -25,14 +25,23 @@
             <button data-unit="sec" class="active">per second</button>
             <button data-unit="min">per minute</button>
             <button data-unit="hour">per hour</button>
+            <button data-unit="day">per day</button>
+            <button data-unit="week">per week</button>
+            <button data-unit="month">per month</button>
             <button data-unit="year">per year</button>
         </nav>
 
         <main class="contrast-grid">
-            <div class="card spending" id="leftCard">
-                <div class="card-label">SPENDING</div>
-                <h2 class="entity-name">NASA</h2>
-                <div class="entity-type">government</div>
+            <div class="card spending" id="leftCard" data-side="left">
+                <div class="card-controls">
+                    <button class="mode-switch active" data-mode="spending">SPENDING</button>
+                    <button class="mode-switch" data-mode="income">INCOME</button>
+                </div>
+                <div class="entity-header">
+                    <img src="" class="entity-icon" id="leftIcon" alt="">
+                    <h2 class="entity-name" id="leftName">NASA</h2>
+                </div>
+                <div class="entity-type" id="leftType">government</div>
                 
                 <div class="visualizer">
                     <div class="bar" id="leftBar"></div>
@@ -44,14 +53,21 @@
                 </div>
 
                 <div class="live-rate">
-                    <span id="leftRate">0.00</span> <small>/ sec</small>
+                    <span id="leftApprox" class="approx">≈</span>
+                    <span id="leftRate">0.00</span> <small id="leftUnit">/ sec</small>
                 </div>
             </div>
 
-            <div class="card income" id="rightCard">
-                <div class="card-label">INCOME</div>
-                <h2 class="entity-name">ELON MUSK</h2>
-                <div class="entity-type">person</div>
+            <div class="card income" id="rightCard" data-side="right">
+                <div class="card-controls">
+                    <button class="mode-switch" data-mode="spending">SPENDING</button>
+                    <button class="mode-switch active" data-mode="income">INCOME</button>
+                </div>
+                <div class="entity-header">
+                    <img src="" class="entity-icon" id="rightIcon" alt="">
+                    <h2 class="entity-name" id="rightName">ELON MUSK</h2>
+                </div>
+                <div class="entity-type" id="rightType">person</div>
 
                 <div class="visualizer">
                     <div class="bar" id="rightBar"></div>
@@ -63,11 +79,13 @@
                 </div>
 
                 <div class="live-rate">
-                    <span id="rightRate">0.00</span> <small>/ sec</small>
+                    <span id="rightApprox" class="approx">≈</span>
+                    <span id="rightRate">0.00</span> <small id="rightUnit">/ sec</small>
                 </div>
             </div>
         </main>
     </div>
     <script src="script.js"></script>
 </body>
-</html>
+                                                                  </html>
+                                                                  
