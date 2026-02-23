@@ -20,15 +20,16 @@ body {
     display: flex;
     justify-content: center;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 .app-container {
     width: 100%;
-    max-width: 450px; /* Імітуємо мобільний екран */
-    padding: 20px;
+    max-width: 450px;
+    padding: 15px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
 }
 
 header {
@@ -39,17 +40,19 @@ header {
 }
 
 h1 {
-    font-size: 12px;
+    font-size: 11px;
     letter-spacing: 1px;
     color: var(--text-dim);
+    text-align: center;
 }
 
-/* Селектори (роки та одиниці часу) */
+/* Навігація */
 .year-selector, .time-tabs {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     overflow-x: auto;
     padding-bottom: 5px;
+    scrollbar-width: none;
 }
 
 .year-selector::-webkit-scrollbar, .time-tabs::-webkit-scrollbar {
@@ -64,8 +67,8 @@ button {
     border-radius: 20px;
     cursor: pointer;
     white-space: nowrap;
-    font-size: 12px;
-    transition: 0.3s;
+    font-size: 11px;
+    transition: 0.2s;
 }
 
 button.active {
@@ -76,95 +79,99 @@ button.active {
 
 .time-tabs button.active {
     border-color: var(--green-accent);
+    background: rgba(0, 255, 136, 0.1);
 }
 
 /* Картки */
 .contrast-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    flex-grow: 1;
+    gap: 10px;
 }
 
 .card {
     background: var(--card-bg);
     border-radius: 12px;
-    padding: 20px 15px;
+    padding: 15px 12px;
     display: flex;
     flex-direction: column;
-    position: relative;
     border: 1px solid #222;
+    min-width: 0; /* Важливо для clamp шрифтів */
+    transition: border-color 0.3s;
 }
 
-.card-label {
-    font-size: 10px;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
+.card.spending { border-top: 2px solid var(--red-accent); }
+.card.income { border-top: 2px solid var(--green-accent); }
 
 .card-controls {
     display: flex;
-    gap: 5px;
-    margin-bottom: 15px;
+    gap: 4px;
+    margin-bottom: 12px;
 }
 
 .mode-switch {
-    font-size: 9px;
-    padding: 4px 8px;
-    border: 1px solid #333;
-    background: transparent;
-    color: var(--text-dim);
+    font-size: 8px;
+    padding: 3px 6px;
     border-radius: 4px;
+    border: 1px solid #333;
 }
 
-.mode-switch.active[data-mode="spending"] {
+.card.spending .mode-switch[data-mode="spending"].active {
     background: rgba(255, 77, 77, 0.2);
     color: var(--red-accent);
     border-color: var(--red-accent);
 }
 
-.mode-switch.active[data-mode="income"] {
+.card.income .mode-switch[data-mode="income"].active {
     background: rgba(0, 255, 136, 0.2);
     color: var(--green-accent);
     border-color: var(--green-accent);
 }
 
+/* Блок назви: вирівнюємо графіки в одну лінію */
+.entity-header-block {
+    height: 54px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-bottom: 4px;
+}
+
 .entity-header {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 4px;
+    gap: 8px;
 }
 
 .entity-icon {
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    object-fit: cover;
+    flex-shrink: 0;
     background: #333;
 }
 
-
-.spending .card-label { color: var(--red-accent); }
-.income .card-label { color: var(--green-accent); }
-
 .entity-name {
-    font-size: 18px;
-    margin-bottom: 4px;
+    font-size: clamp(12px, 3.5vw, 16px);
+    line-height: 1.1;
+    word-break: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .entity-type {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--text-dim);
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
-/* Візуалізатор (Бари) */
+/* Візуалізатор */
 .visualizer {
-    height: 150px;
-    width: 100%;
+    height: 120px;
     background: #111;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     position: relative;
     display: flex;
     align-items: flex-end;
@@ -174,38 +181,38 @@ button.active {
 
 .bar {
     width: 100%;
-    transition: height 0.5s ease-out;
+    transition: height 0.3s ease-out;
 }
 
-.spending .bar {
-    background: linear-gradient(to top, #4a1111, var(--red-accent));
-    box-shadow: 0 0 15px var(--red-accent);
+.spending .bar { background: linear-gradient(to top, #4a1111, var(--red-accent)); box-shadow: 0 0 15px var(--red-accent); }
+.income .bar { background: linear-gradient(to top, #114a2a, var(--green-accent)); box-shadow: 0 0 15px var(--green-accent); }
+
+/* Цифри з авто-шрифтом */
+.cumulative, .live-rate span {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.income .bar {
-    background: linear-gradient(to top, #114a2a, var(--green-accent));
-    box-shadow: 0 0 15px var(--green-accent);
-}
-
-/* Цифри */
 .cumulative {
-    font-size: 14px;
+    font-size: clamp(11px, 3.2vw, 15px);
     font-weight: bold;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
 }
 
 .subtext {
-    font-size: 10px;
+    font-size: 9px;
     color: var(--text-dim);
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .live-rate {
-    font-size: 16px;
+    font-size: clamp(12px, 3.8vw, 17px);
     font-weight: bold;
 }
 
-.live-rate small {
-    color: var(--text-dim);
-    font-size: 10px;
-}
+.approx { color: var(--text-dim); margin-right: 2px; display: none; }
+
+small { color: var(--text-dim); font-size: 10px; }
+        
