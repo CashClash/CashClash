@@ -4,6 +4,7 @@
     {
       "id": "nasa",
       "name": "NASA",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e5/NASA_logo.svg",
       "category": "government",
       "color": "#ff4d4d",
       "data": {
@@ -14,6 +15,7 @@
     {
       "id": "elon-musk",
       "name": "ELON MUSK",
+      "image" : "",
       "category": "person",
       "color": "#00ff88",
       "data": {
