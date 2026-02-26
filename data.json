@@ -15,7 +15,7 @@
     {
       "id": "elon-musk",
       "name": "ELON MUSK",
-      "image" : "",
+      "image" : "https://upload.wikimedia.org/wikipedia/commons/5/5e/Elon_Musk_-_54820081119_%28cropped%29.jpg",
       "category": "person",
       "color": "#00ff88",
       "data": {
