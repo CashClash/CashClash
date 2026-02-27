@@ -57,10 +57,11 @@ body {
     .contrast-grid {
         grid-template-columns: 1fr 1fr; /* Дві картки в ряд */
         gap: 25px;
+        align-items: stretch; /* Картки однакової висоти */
     }
     h1 { font-size: 16px !important; }
     .entity-name { font-size: 24px !important; }
-    .live-rate { font-size: 26px !important; }
+    .live-rate { font-size: 32px !important; }
 }
 
 /* --- 4. ШАПКА ТА ІНСТРУМЕНТИ --- */
@@ -95,9 +96,10 @@ h1 {
     background: var(--nav-btn-bg);
     border: 1px solid var(--border);
     color: var(--text-main);
-    padding: 5px 10px;
+    padding: 5px 12px;
     border-radius: 8px;
     cursor: pointer;
+    font-size: 18px;
 }
 
 /* --- 5. НАВІГАЦІЯ (Роки та Час) --- */
@@ -114,11 +116,11 @@ nav button {
     background: var(--nav-btn-bg);
     border: 1px solid var(--border);
     color: var(--text-dim);
-    padding: 6px 14px;
+    padding: 8px 16px;
     border-radius: 20px;
     cursor: pointer;
     white-space: nowrap;
-    font-size: 11px;
+    font-size: 12px;
     transition: 0.2s;
 }
 
@@ -130,33 +132,53 @@ nav button.active {
 
 .time-tabs button.active {
     border-color: var(--green-accent);
-    background: rgba(0, 255, 136, 0.15);
+    background: rgba(0, 255, 136, 0.1);
     color: var(--green-accent);
 }
 
 /* --- 6. КАРТКИ ТА ВІЗУАЛІЗАЦІЯ --- */
 .contrast-grid {
     display: grid;
-    grid-template-columns: 1fr; /* На мобілках одна під одною */
+    grid-template-columns: 1fr;
     gap: 15px;
 }
 
 .card {
     background: var(--card-bg);
     border-radius: 20px;
-    padding: 20px;
-    position: relative;
+    padding: 24px;
     border: 1px solid var(--border);
-    transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.card.spending { border-top: 4px solid var(--red-accent); }
-.card.income { border-top: 4px solid var(--green-accent); }
+.card.spending { border-top: 5px solid var(--red-accent); }
+.card.income { border-top: 5px solid var(--green-accent); }
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.entity-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    object-fit: contain;
+    background: white; /* Для лого на темному фоні */
+    padding: 4px;
+}
+
+.entity-name { font-size: 18px; font-weight: bold; text-transform: uppercase; }
+.entity-type { font-size: 10px; color: var(--text-dim); text-transform: uppercase; }
 
 .visualizer {
-    height: 220px;
-    background: rgba(0, 0, 0, 0.1);
-    margin: 15px 0;
+    height: 180px;
+    background: rgba(0, 0, 0, 0.15);
+    margin: 20px 0;
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -166,44 +188,83 @@ nav button.active {
 }
 
 .bar {
-    width: 45%;
+    width: 60px;
     transition: height 0.8s cubic-bezier(0.17, 0.67, 0.83, 0.67);
     border-radius: 6px 6px 0 0;
 }
 
-.spending .bar { background: linear-gradient(to top, #631414, var(--red-accent)); }
-.income .bar { background: linear-gradient(to top, #146332, var(--green-accent)); }
+.spending .bar { 
+    background: linear-gradient(to top, #631414, var(--red-accent)); 
+    box-shadow: 0 0 20px rgba(255, 77, 77, 0.3);
+}
+.income .bar { 
+    background: linear-gradient(to top, #146332, var(--green-accent)); 
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+.counter-group { text-align: center; margin-bottom: 15px; }
+.cumulative { font-size: 28px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.subtext { font-size: 10px; color: var(--text-dim); text-transform: uppercase; }
+
+.live-rate {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: auto;
+}
+.approx { margin-right: 5px; color: var(--red-accent); }
 
 /* --- 7. ДЕТАЛІ ТА СЕО --- */
 .details-list {
-    margin-top: 15px;
-    padding-top: 10px;
+    margin-top: 20px;
+    padding-top: 15px;
     border-top: 1px solid var(--border);
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
 }
 
 .detail-item {
     display: flex;
     justify-content: space-between;
-    font-size: 11px;
+    font-size: 12px;
     color: var(--text-dim);
 }
+.detail-item b { color: var(--text-main); }
 
 .donate-section {
-    margin-top: 20px;
-    padding: 25px;
+    margin-top: 30px;
+    padding: 30px;
     background: var(--card-bg);
-    border-radius: 20px;
+    border-radius: 24px;
     text-align: center;
     border: 1px dashed var(--green-accent);
 }
 
+.btn-donate {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 24px;
+    background: var(--green-accent);
+    color: #000;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: bold;
+}
+
 .seo-block {
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.6;
     color: var(--text-dim);
-    margin-top: 30px;
-    padding-bottom: 50px;
+    margin-top: 40px;
+    padding-bottom: 60px;
+    text-align: justify;
 }
+
+footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
+    color: var(--text-dim);
+}
+.brand-name { color: var(--green-accent); font-weight: bold; }
