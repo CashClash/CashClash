@@ -52,6 +52,47 @@
             }
           },
           "methodology": "Data based on the FY 2025 President's Budget Request and subsequent Congressional Justifications. Total figure represents the enacted budget authority. Spending breakdown calculated by dividing major mission directorate allocations by the total topline figure."
+        },
+        "2024": {
+          "income": {
+            "total": 24875000000,
+            "sources": [
+              "Consolidated Appropriations Act, 2024 (P.L. 118-42)",
+              "Commerce, Justice, Science, and Related Agencies Appropriations Act"
+            ],
+            "breakdown": {
+              "federal_appropriations": {
+                "name": "Federal Budget Authority",
+                "percent": 100.0
+              }
+            }
+          },
+          "spending": {
+            "total": 24875000000,
+            "breakdown": {
+              "deep_space_exploration": {
+                "name": "Deep Space Exploration Systems",
+                "percent": 30.82
+              },
+              "science": {
+                "name": "Science Mission Directorate",
+                "percent": 29.48
+              },
+              "space_operations": {
+                "name": "Space Operations (ISS & LEO)",
+                "percent": 16.96
+              },
+              "mission_support": {
+                "name": "Safety, Security, and Mission Services",
+                "percent": 12.60
+              },
+              "technology_aeronautics_other": {
+                "name": "Space Technology, Aeronautics & Others",
+                "percent": 10.14
+              }
+            }
+          },
+          "methodology": "Data based on the enacted FY 2024 funding levels from Public Law 118-42 and official NASA Spending Plan. Income reflects the total budget authority provided by Congress. Spending breakdown calculated by dividing specific mission directorate allocations (Science: $7.3342B, Exploration: $7.6662B, Space Ops: $4.22B, SSMS: $3.1335B, etc.) by the total enacted amount of $24.875B."
         }
       }
     },
@@ -108,6 +149,27 @@
             }
           },
           "methodology": "Income represents the net increase in wealth (approx. $245B) driven by the restoration of the 2018 Tesla pay package ($56B+), SpaceX valuation hitting $800B, and xAI reaching $200B+. Spending is calculated as a sum of estimated personal capital reinvestments and major Capex commitments in controlled entities (e.g., $13B for xAI compute and $8B for Tesla AI/robotics infrastructure)."
+        },
+        "2024": {
+          "income": {
+            "total": 203000000000,
+            "sources": ["Tesla Stock Appreciation", "SpaceX Valuation Increase", "Tesla 2018 CEO Performance Award Re-ratification"],
+            "breakdown": {
+              "category_1": { "name": "Tesla Equity Growth", "percent": 55.2 },
+              "category_2": { "name": "SpaceX Valuation Gains", "percent": 24.6 },
+              "category_3": { "name": "Stock Options Re-valuation", "percent": 15.0 },
+              "category_4": { "name": "xAI and Other Ventures", "percent": 5.2 }
+            }
+          },
+          "spending": {
+            "total": 1041000000,
+            "sources": ["Political Donations", "xAI Capital Investment", "Operational Debt Service"],
+            "breakdown": {
+              "category_1": { "name": "Business Re-investments (xAI)", "percent": 72.1 },
+              "category_2": { "name": "Political Campaign Contributions", "percent": 27.9 }
+            }
+          },
+          "methodology": "Income calculated as the annual delta in Net Worth based on Bloomberg Billionaires Index (from ~$229B to ~$432B). Spending includes confirmed capital injections into xAI ($750M) and documented donations to America PAC and other political entities ($291M). All figures represent realized and unrealized asset movements as per rules for high-net-worth individuals."
         }
       }
     }
