@@ -17,7 +17,6 @@ async function init() {
     currentLang = localStorage.getItem('lang') || 'ua';
     await loadLanguage(currentLang);
     setupEventListeners();
-    setupLangSelector();
     startTickers();
 }
 
@@ -33,27 +32,24 @@ async function loadLanguage(lang) {
         financialData.left = nasa;
         financialData.right = musk;
         applyMainTexts(main);
+        setupLangSelector();
         updateUI();
     } catch (e) { console.error("Data error", e); }
 }
 
 function applyMainTexts(main) {
     document.getElementById('mainTitle').innerText = main.ui.title;
-    document.getElementById('donateTitle').innerText = main.donate.title;
-    document.getElementById('donateDesc').innerText = main.donate.desc;
-    document.getElementById('donateBtn').innerText = main.donate.btn_text;
     document.getElementById('leftCumLabel').innerText = main.ui.cumulative_label;
     document.getElementById('rightCumLabel').innerText = main.ui.cumulative_label;
 }
 
 function setupLangSelector() {
     const container = document.getElementById('langSelector');
-    // Оскільки ти вилучив файли, я захардкодив UA, додай інші за аналогією
-    const langs = [{code: 'ua', name: 'UA'}, {code: 'en', name: 'EN'}];
+    const langs = ['ua', 'en'];
     container.innerHTML = langs.map(l => 
-        `<img src="i18n/${l.code}/${l.code.toUpperCase()}.png" 
-              class="lang-btn ${l.code === currentLang ? 'active' : ''}" 
-              onclick="loadLanguage('${l.code}')" title="${l.name}">`
+        `<img src="i18n/${l}/${l.toUpperCase()}.png" 
+              class="lang-btn ${l === currentLang ? 'active' : ''}" 
+              onclick="loadLanguage('${l}')">`
     ).join('');
 }
 
@@ -61,10 +57,7 @@ function toggleMode(side, mode) {
     cardModes[side] = mode;
     document.querySelectorAll(`#${side}Card .mode-switcher button`).forEach(b => b.classList.remove('active'));
     document.getElementById(`${side}Btn${mode.charAt(0).toUpperCase() + mode.slice(1)}`).classList.add('active');
-    
-    // Зміна кольору картки залежно від режиму
-    const card = document.getElementById(`${side}Card`);
-    card.className = `card ${mode}`;
+    document.getElementById(`${side}Card`).className = `card ${mode}`;
     updateUI();
 }
 
@@ -75,7 +68,6 @@ function updateUI() {
         const mode = cardModes[side];
         const container = document.getElementById(`${side}Details`);
         const breakdown = data.data[currentYear][mode].breakdown;
-        
         container.innerHTML = Object.values(breakdown).map(item => 
             `<div class="detail-item"><span>${item.name}</span><b>${item.percent}%</b></div>`
         ).join('');
@@ -85,7 +77,8 @@ function updateUI() {
 function startTickers() {
     const update = () => {
         const now = new Date();
-        const secondsPassed = (currentYear === "2026") ? (now - new Date(2026, 0, 1)) / 1000 : multipliers.year;
+        const startOfYear = new Date(now.getFullYear(), 0, 1);
+        const secondsPassed = (now - startOfYear) / 1000;
 
         ["left", "right"].forEach(side => {
             const data = financialData[side];
@@ -94,26 +87,21 @@ function startTickers() {
             const baseTotal = data.data[currentYear][mode].total;
             const basePerSec = baseTotal / multipliers.year;
 
-            // Живе коливання (Drift)
             if (currentYear === "2026") {
                 drift[side] += (Math.random() - 0.5) * 0.002;
                 drift[side] = Math.max(0.95, Math.min(drift[side], 1.05));
-            } else {
-                drift[side] = 1;
-            }
+            } else { drift[side] = 1; }
 
             const currentRate = basePerSec * drift[side] * multipliers[currentTimeUnit];
             
             document.getElementById(`${side}Name`).innerText = data.name;
+            document.getElementById(`${side}Icon`).src = data.image;
             document.getElementById(`${side}Rate`).innerText = (['sec', 'min'].includes(currentTimeUnit)) ? rateFormatter.format(currentRate) : wholeFormatter.format(currentRate);
             document.getElementById(`${side}Cumulative`).innerText = wholeFormatter.format(secondsPassed * basePerSec);
-            document.getElementById(`${side}Icon`).src = data.image;
             document.getElementById(`${side}Unit`).innerText = `/ ${currentTimeUnit}`;
             document.getElementById(`${side}Approx`).style.visibility = (currentYear === "2026") ? "visible" : "hidden";
 
-            // Візуалізація стовпчика
-            const scale = 10000; 
-            const h = (basePerSec / scale) * 100;
+            const h = (basePerSec / 10000) * 100;
             document.getElementById(`${side}Bar`).style.height = `${Math.min(Math.max(h, 10), 95)}%`;
         });
         requestAnimationFrame(update);
@@ -140,12 +128,9 @@ function setupEventListeners() {
 }
 
 function toggleTheme() {
-    const body = document.body;
-    const current = body.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
-    body.setAttribute('data-theme', next);
+    const next = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.body.setAttribute('data-theme', next);
     document.getElementById('themeToggle').innerText = next === 'dark' ? '🌙' : '☀️';
 }
 
 init();
-                                  
