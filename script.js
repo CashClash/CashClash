@@ -55,18 +55,21 @@ async function loadLanguage(lang) {
 
 function applyMainTexts(main) {
     document.getElementById('mainTitle').innerText = main.ui.title;
-    document.querySelectorAll('.subtext').forEach(el => el.innerText = main.ui.cumulative_label);
+    document.getElementById('leftCumLabel').innerText = main.ui.cumulative_label;
+    document.getElementById('rightCumLabel').innerText = main.ui.cumulative_label;
 }
 
 function renderLangSelector() {
     const selector = document.getElementById('langSelector');
     const dropdown = document.getElementById('langDropdown');
     const current = langDataCache[currentLang];
+    
     selector.innerHTML = `
         <img src="i18n/${currentLang}/${currentLang.toUpperCase()}.png">
-        <span>${current ? current.shortName : currentLang}</span>
+        <span>${current ? current.shortName : currentLang.toUpperCase()}</span>
         <span class="arrow-down">▼</span>
     `;
+    
     dropdown.innerHTML = availableLangs.map(l => `
         <div class="lang-item" onclick="loadLanguage('${l}')">
             <img src="i18n/${l}/${l.toUpperCase()}.png">
@@ -81,6 +84,20 @@ function toggleLangMenu(event) {
 }
 
 window.onclick = () => document.getElementById('langDropdown').classList.remove('active');
+
+function toggleTheme() {
+    const current = document.body.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.body.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    document.getElementById('themeToggle').innerText = next === 'dark' ? '🌙' : '☀️';
+}
+
+function applyInitialTheme() {
+    const t = localStorage.getItem('theme') || 'dark';
+    document.body.setAttribute('data-theme', t);
+    document.getElementById('themeToggle').innerText = t === 'dark' ? '🌙' : '☀️';
+}
 
 function toggleMode(side, mode) {
     cardModes[side] = mode;
@@ -129,8 +146,10 @@ function startTickers() {
             document.getElementById(`${side}Icon`).src = data.image;
             document.getElementById(`${side}Rate`).innerText = (['sec', 'min'].includes(currentTimeUnit)) ? rateFormatter.format(rate) : wholeFormatter.format(rate);
             document.getElementById(`${side}Cumulative`).innerText = wholeFormatter.format(cumulative);
-            document.getElementById(`${side}Unit`).innerText = `/ ${currentTimeUnit}`;
-            document.getElementById(`${side}Approx`).style.visibility = (currentYear === "2026") ? "visible" : "hidden";
+            document.getElementById(`${side}Unit`).innerText = `/${currentTimeUnit}`;
+            
+            const approxEl = document.getElementById(`${side}Approx`);
+            if(approxEl) approxEl.style.visibility = (currentYear === "2026") ? "visible" : "hidden";
 
             const h = (basePerSec / 10000) * 100;
             document.getElementById(`${side}Bar`).style.height = `${Math.min(Math.max(h, 10), 95)}%`;
@@ -156,18 +175,6 @@ function setupEventListeners() {
             updateUI();
         }
     });
-}
-
-function applyInitialTheme() {
-    const t = localStorage.getItem('theme') || 'dark';
-    document.body.setAttribute('data-theme', t);
-}
-
-function toggleTheme() {
-    const current = document.body.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
-    document.body.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
 }
 
 init();
