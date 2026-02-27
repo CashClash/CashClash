@@ -2,6 +2,7 @@
   "ui": {
     "title": "ФІНАНСОВИЙ КОНТРАСТ LIVE",
     "lang" : "Eanglish",
+    "short" : "EN",
     "spending": "Витрати",
     "income": "Доходи",
     "cumulative_label": "накопичено з 1 січня",
