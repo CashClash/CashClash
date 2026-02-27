@@ -268,3 +268,29 @@ footer {
     color: var(--text-dim);
 }
 .brand-name { color: var(--green-accent); font-weight: bold; }
+
+.mode-switcher {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 5px;
+    background: var(--nav-btn-bg);
+    padding: 2px;
+    border-radius: 10px;
+    width: fit-content;
+}
+.mode-switcher button {
+    padding: 2px 8px;
+    font-size: 10px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+}
+.mode-switcher button.active {
+    background: var(--card-bg);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    color: var(--text-main);
+}
+/* Щоб на ПК були поруч */
+@media (min-width: 900px) {
+    .app-container { max-width: 1200px; }
+}
