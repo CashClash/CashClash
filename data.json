@@ -88,12 +88,6 @@
           },
           "spending": {
             "total": 21000000000,
-            "sources": [
-              "Tesla R&D and AI Infrastructure",
-              "xAI Compute Power Acquisition",
-              "SpaceX Starship Development",
-              "Personal TSLA Share Purchases"
-            ],
             "breakdown": {
               "ai_infrastructure_compute": {
                 "name": "AI Infrastructure & Compute (xAI/Tesla)",
