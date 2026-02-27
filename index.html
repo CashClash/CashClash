@@ -32,73 +32,62 @@
         </nav>
 
         <main class="contrast-grid">
-    <div class="card spending" id="leftCard" data-side="left">
-        <div class="card-controls">
-            <button class="mode-switch active" data-mode="spending">SPENDING</button>
-            <button class="mode-switch" data-mode="income">INCOME</button>
-        </div>
-        <div class="entity-header-block">
-            <div class="entity-header">
-                <img src="" class="entity-icon" id="leftIcon" alt="">
-                <h2 class="entity-name" id="leftName">NASA</h2>
+            <div class="card spending" id="leftCard" data-side="left">
+                <div class="card-controls">
+                    <button class="mode-switch active" data-mode="spending">SPENDING</button>
+                    <button class="mode-switch" data-mode="income">INCOME</button>
+                </div>
+                <div class="entity-header-block">
+                    <div class="entity-header">
+                        <img src="" class="entity-icon" id="leftIcon" alt="">
+                        <h2 class="entity-name" id="leftName">NASA</h2>
+                    </div>
+                </div>
+                <div class="entity-type" id="leftType">government</div>
+                
+                <div class="visualizer">
+                    <div class="bar" id="leftBar"></div>
+                </div>
+
+                <div class="counter-group">
+                    <div class="cumulative" id="leftCumulative">0</div>
+                    <div class="subtext">cumulative since Jan 1</div>
+                </div>
+
+                <div class="live-rate">
+                    <span id="leftApprox" class="approx">≈</span>
+                    <span id="leftRate">0.00</span> <small id="leftUnit">/ sec</small>
+                </div>
             </div>
-        </div>
-        <div class="entity-type" id="leftType">government</div>
-        
-        <div class="visualizer">
-            <div class="bar" id="leftBar"></div>
-        </div>
 
-        <div class="counter-group">
-            <div class="cumulative" id="leftCumulative">0</div>
-            <div class="subtext">cumulative since Jan 1</div>
-        </div>
+            <div class="card income" id="rightCard" data-side="right">
+                <div class="card-controls">
+                    <button class="mode-switch" data-mode="spending">SPENDING</button>
+                    <button class="mode-switch active" data-mode="income">INCOME</button>
+                </div>
+                <div class="entity-header-block">
+                    <div class="entity-header">
+                        <img src="" class="entity-icon" id="rightIcon" alt="">
+                        <h2 class="entity-name" id="rightName">ELON MUSK</h2>
+                    </div>
+                </div>
+                <div class="entity-type" id="rightType">person</div>
 
-        <div class="live-rate">
-            <span id="leftApprox" class="approx">≈</span>
-            <span id="leftRate">0.00</span> <small id="leftUnit">/ sec</small>
-        </div>
+                <div class="visualizer">
+                    <div class="bar" id="rightBar"></div>
+                </div>
 
-        <div class="breakdown-container">
-            <div class="breakdown-title" id="leftBreakdownTitle">Where it goes:</div>
-            <ul class="breakdown-list" id="leftBreakdownList"></ul>
-        </div>
-    </div>
+                <div class="counter-group">
+                    <div class="cumulative" id="rightCumulative">0</div>
+                    <div class="subtext">cumulative since Jan 1</div>
+                </div>
 
-    <div class="card income" id="rightCard" data-side="right">
-        <div class="card-controls">
-            <button class="mode-switch" data-mode="spending">SPENDING</button>
-            <button class="mode-switch active" data-mode="income">INCOME</button>
-        </div>
-        <div class="entity-header-block">
-            <div class="entity-header">
-                <img src="" class="entity-icon" id="rightIcon" alt="">
-                <h2 class="entity-name" id="rightName">ELON MUSK</h2>
+                <div class="live-rate">
+                    <span id="rightApprox" class="approx">≈</span>
+                    <span id="rightRate">0.00</span> <small id="rightUnit">/ sec</small>
+                </div>
             </div>
-        </div>
-        <div class="entity-type" id="rightType">person</div>
-
-        <div class="visualizer">
-            <div class="bar" id="rightBar"></div>
-        </div>
-
-        <div class="counter-group">
-            <div class="cumulative" id="rightCumulative">0</div>
-            <div class="subtext">cumulative since Jan 1</div>
-        </div>
-
-        <div class="live-rate">
-            <span id="rightApprox" class="approx">≈</span>
-            <span id="rightRate">0.00</span> <small id="rightUnit">/ sec</small>
-        </div>
-
-        <div class="breakdown-container">
-            <div class="breakdown-title" id="rightBreakdownTitle">Where it comes from:</div>
-            <ul class="breakdown-list" id="rightBreakdownList"></ul>
-        </div>
-    </div>
-</main>
-<footer class="methodology-box" id="methodologyText"></footer>
+        </main>
     </div>
     <script src="script.js"></script>
 </body>
