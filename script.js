@@ -54,10 +54,8 @@ async function loadLanguage(lang) {
 }
 
 function applyMainTexts(main) {
-    // Основні заголовки
     document.getElementById('mainTitle').innerText = main.ui.title;
     
-    // Картки
     document.getElementById('leftCumLabel').innerText = main.ui.cumulative_label;
     document.getElementById('rightCumLabel').innerText = main.ui.cumulative_label;
     document.getElementById('leftBtnSpending').innerText = main.ui.spending;
@@ -65,15 +63,21 @@ function applyMainTexts(main) {
     document.getElementById('leftBtnIncome').innerText = main.ui.income;
     document.getElementById('rightBtnIncome').innerText = main.ui.income;
 
-    // Секція Донату
+    // Оновлюємо кнопки перемикання одиниць часу
+    Object.keys(main.ui.units).forEach(key => {
+        const btn = document.getElementById(`unit_${key}`);
+        if (btn) btn.innerText = main.ui.units[key];
+    });
+
     document.getElementById('donateTitle').innerText = main.donate.title;
     document.getElementById('donateDesc').innerText = main.donate.desc;
     document.getElementById('donateBtn').innerText = main.donate.btn_text;
-
-    // SEO та Футер
     document.getElementById('seoText').innerHTML = main.seo_text;
     document.getElementById('footerCreated').innerText = main.ui.footer_created;
     document.getElementById('footerSlogan').innerText = main.ui.footer_slogan;
+    
+    // Зберігаємо переклади юнітів глобально, щоб тікер міг їх брати
+    window.langUnits = main.ui.units;
 }
 
 function renderLangSelector() {
