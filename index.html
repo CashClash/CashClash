@@ -10,10 +10,8 @@
     <div class="app-container">
         <header>
             <div class="tool-wrapper" id="langWrapper" onclick="toggleLangMenu(event)">
-                <div class="lang-custom" id="langSelector">
-                    </div>
-                <div class="lang-dropdown" id="langDropdown">
-                    </div>
+                <div class="lang-custom" id="langSelector"></div>
+                <div class="lang-dropdown" id="langDropdown"></div>
             </div>
 
             <h1 id="mainTitle">CONTRAST</h1>
@@ -23,13 +21,13 @@
             </div>
         </header>
 
-        <nav id="yearSelector">
+        <nav class="year-selector" id="yearSelector">
             <button class="active">2026</button>
             <button>2025</button>
             <button>2024</button>
         </nav>
 
-        <nav id="timeTabs">
+        <nav class="time-tabs" id="timeTabs">
             <button data-unit="sec" class="active">/sec</button>
             <button data-unit="min">/min</button>
             <button data-unit="hour">/hour</button>
@@ -53,7 +51,10 @@
                     <div class="cumulative" id="leftCumulative">0</div>
                     <div class="subtext" id="leftCumLabel">cumulative</div>
                 </div>
-                <div class="live-rate"><span id="leftApprox">≈</span><span id="leftRate">0</span> <small id="leftUnit">/sec</small></div>
+                <div class="live-rate">
+                    <span id="leftApprox" class="approx">≈</span>
+                    <span id="leftRate">0</span> <small id="leftUnit">/sec</small>
+                </div>
                 <div class="details-list" id="leftDetails"></div>
             </div>
 
@@ -71,7 +72,10 @@
                     <div class="cumulative" id="rightCumulative">0</div>
                     <div class="subtext" id="rightCumLabel">cumulative</div>
                 </div>
-                <div class="live-rate"><span id="leftApprox">≈</span><span id="rightRate">0</span> <small id="rightUnit">/sec</small></div>
+                <div class="live-rate">
+                    <span id="rightApprox" class="approx">≈</span>
+                    <span id="rightRate">0</span> <small id="rightUnit">/sec</small>
+                </div>
                 <div class="details-list" id="rightDetails"></div>
             </div>
         </main>
