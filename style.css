@@ -113,17 +113,16 @@ nav button.active { background: var(--text-main); color: var(--bg-color); }
 
 .bar-column {
     flex: 1;
-    background: var(--text-dim); /* Колір для майбутніх місяців */
-    opacity: 0.1; /* Майбутні місяці — ледь видимі "скелети" */
-    border-radius: 2px;
-    transition: height 0.3s ease, background 0.3s ease, opacity 0.3s ease;
+    background: var(--accent-color);
+    border-radius: 2px 2px 0 0; /* Скруглюємо тільки верх, як у справжніх графіках */
+    /* Плавний перехід висоти за 0.8 секунди з "живим" ефектом сповільнення */
+    transition: height 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+    opacity: 0.1;
 }
 
-/* Активні місяці (минулі та поточний) */
 .bar-column.active {
     opacity: 1;
-    background: var(--accent-color); /* Чистий колір без градієнтів */
-    box-shadow: 0 -2px 10px var(--accent-shadow); /* Свічення тільки зверху */
+    box-shadow: 0 -2px 10px var(--accent-shadow);
 }
 
 /* Поточний місяць можна виділити трохи яскравіше */
