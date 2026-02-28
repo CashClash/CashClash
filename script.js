@@ -141,6 +141,20 @@ function updateUI() {
     });
 }
 
+let absoluteMax = 0;
+
+function calculateAbsoluteMax() {
+    ["left", "right"].forEach(side => {
+        const data = financialData[side];
+        if (!data) return;
+        Object.keys(data.data).forEach(year => {
+            const spending = data.data[year].spending.total;
+            const income = data.data[year].income.total;
+            absoluteMax = Math.max(absoluteMax, spending, income);
+        });
+    });
+}
+
 function startTickers() {
     const update = () => {
         const now = new Date();
@@ -148,14 +162,14 @@ function startTickers() {
         let secondsPassed = (now - startOfYear) / 1000;
 
         // 1. Спочатку знайдемо ГЛОБАЛЬНИЙ максимум для правильного масштабування обох карток
-        let globalMax = 0;
-        ["left", "right"].forEach(side => {
-            const data = financialData[side];
-            if (data && data.data[currentYear]) {
-                const mode = cardModes[side];
-                globalMax = Math.max(globalMax, data.data[currentYear][mode].total);
-            }
-        });
+        // let globalMax = 0;
+        // ["left", "right"].forEach(side => {
+        //     const data = financialData[side];
+        //     if (data && data.data[currentYear]) {
+        //         const mode = cardModes[side];
+        //         globalMax = Math.max(globalMax, data.data[currentYear][mode].total);
+        //     }
+        // });
 
         // 2. Тепер проходимо по кожній стороні та оновлюємо дані й графік
         ["left", "right"].forEach(side => {
@@ -200,7 +214,7 @@ function startTickers() {
                     let heightPercent = 0;
 
                     // Висота базується на відношенні річної суми об'єкта до глобального максимуму
-                    const baseHeight = (yearlyTotal / globalMax) * 100;
+                    const baseHeight = (yearlyTotal / absoluteMax) * 100;
 
                     if (i < currentMonth || currentYear !== "2026") {
                         // Минулі місяці: повна висота для цього місяця
