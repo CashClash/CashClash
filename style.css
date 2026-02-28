@@ -157,32 +157,29 @@ nav button.active { background: var(--text-main); color: var(--bg-color); }
 
 /* LIVE RATE SECTION - ВИПРАВЛЕНО */
 .live-rate .rate-main {
-    display: flex; /* Змінюємо на flex для кращого контролю */
-    align-items: center;
-    justify-content: center;
-    min-width: 320px; /* Трохи збільшуємо запас */
+    display: flex;
+    justify-content: center; /* Центрує всю групу (≈ + число) */
+    align-items: baseline;   /* Вирівнює символ по нижній лінії цифр */
+    width: 100%;
     font-family: 'Inter', sans-serif;
     font-weight: 800;
-    font-variant-numeric: tabular-nums;
+    font-variant-numeric: tabular-nums; /* Ключ до стабільності цифр */
     font-feature-settings: "tnum";
 }
 
-/* Фіксуємо сам символ approx */
+/* Символ приблизності */
 .approx {
-    display: inline-block;
-    width: 24px; /* Чітко задана ширина */
-    flex-shrink: 0; /* Щоб він не стискався */
-    text-align: right;
-    margin-right: 8px;
+    margin-right: 6px;       /* Просто невеликий відступ від числа */
     opacity: 0.6;
-    font-family: 'Inter', sans-serif; /* Теж Inter, щоб не було конфліктів */
+    font-size: 0.8em;        /* Можна зробити трохи меншим для стилю */
+    flex-shrink: 0;          /* Щоб не стискався */
 }
 
-/* Фіксуємо контейнер тільки для цифр */
+/* Самі цифри */
 [id$="Rate"] {
     display: inline-block;
-    text-align: left; /* Цифри ростуть вправо, але стоять на місці зліва */
-    min-width: 140px; /* Достатньо для чисел типу 4,424.27 */
+    text-align: left;        /* Важливо: всередині своєї зони цифри ростуть вправо */
+    min-width: 130px;        /* Резервуємо місце, щоб при зміні з 999 на 1000 нічого не смикалось */
 }
 
 .cumulative { 
@@ -320,8 +317,13 @@ nav button.active { background: var(--text-main); color: var(--bg-color); }
     letter-spacing: 4px;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
-    .live-rate .rate-main { min-width: 450px; }
-    [id$="Rate"] { min-width: 220px; }
+    .live-rate .rate-main {
+        font-size: 32px;
+    }
+    [id$="Rate"] {
+        min-width: 180px;    /* Більше місця для великих шрифтів */
+    }
+}
     .app-container { padding: 20px; gap: 20px; }
     .contrast-grid { gap: 20px; }
     .card { padding: 25px; } /* Трохи більше простору всередині карти */
