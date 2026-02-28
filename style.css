@@ -26,7 +26,12 @@ body { background-color: var(--bg-color); color: var(--text-main); display: flex
 
 header { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; }
 
-h1 { font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+h1 { 
+    font-size: 18px; 
+    color: var(--text-main); 
+    letter-spacing: 4px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
 
 /* Language & Theme Wrappers */
 .tool-wrapper {
@@ -152,7 +157,20 @@ nav button.active { background: var(--text-main); color: var(--bg-color); }
 }
 
 .counter-group { text-align: center; margin-bottom: 5px; }
-.cumulative { font-size: 18px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.cumulative { 
+    font-size: 18px; 
+    font-weight: 800; 
+    font-variant-numeric: tabular-nums; 
+}
+
+.approx {
+    margin-right: 4px;
+    opacity: 0.6;
+    display: inline-block;
+    width: 12px; 
+    text-align: center;
+}
+
 .subtext { font-size: 8px; color: var(--text-dim); text-transform: uppercase; }
 
 /* LIVE RATE SECTION - ВИПРАВЛЕНО */
@@ -164,7 +182,13 @@ nav button.active { background: var(--text-main); color: var(--bg-color); }
     margin-top: 10px;
 }
 
-.rate-main { font-size: 20px; font-weight: 800; }
+.rate-main { 
+    font-size: 20px; 
+    font-weight: 800; 
+    /* Ця команда робить всі цифри однаковими за шириною, як у клітинках зошита */
+    font-variant-numeric: tabular-nums; 
+    letter-spacing: -0.5px; /* Трохи зближуємо, щоб виглядало акуратніше */
+}
 
 .rate-divider {
     width: 30px;
@@ -281,13 +305,12 @@ nav button.active { background: var(--text-main); color: var(--bg-color); }
     .app-container { padding: 20px; gap: 20px; }
     .contrast-grid { gap: 20px; }
     .card { padding: 25px; } /* Трохи більше простору всередині карти */
+    .cumulative { font-size: 32px; }
 
     /* Назви (NASA / ELON MUSK) */
     .entity-name { font-size: 20px; } 
     .entity-icon { width: 40px; height: 40px; }
 
-    /* Головні цифри */
-    .cumulative { font-size: 32px; } /* Було 26px */
     .subtext { font-size: 11px; } /* Підпис "Накопичено з..." */
 
     /* Блок швидкості */
