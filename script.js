@@ -147,26 +147,27 @@ function startTickers() {
         const startOfYear = new Date(parseInt(currentYear), 0, 1);
         let secondsPassed = (now - startOfYear) / 1000;
 
-        // 1. Знаходимо МАКСИМАЛЬНЕ значення серед обох карток для масштабу (поза циклом)
-        let maxTotal = 0;
+        // 1. Спочатку знайдемо ГЛОБАЛЬНИЙ максимум для правильного масштабування обох карток
+        let globalMax = 0;
         ["left", "right"].forEach(side => {
             const data = financialData[side];
             if (data && data.data[currentYear]) {
                 const mode = cardModes[side];
-                maxTotal = Math.max(maxTotal, data.data[currentYear][mode].total);
+                globalMax = Math.max(globalMax, data.data[currentYear][mode].total);
             }
         });
 
+        // 2. Тепер проходимо по кожній стороні та оновлюємо дані й графік
         ["left", "right"].forEach(side => {
             const data = financialData[side];
             if (!data || !data.data[currentYear]) return;
             
             const mode = cardModes[side];
-            const baseTotal = data.data[currentYear][mode].total;
-            const basePerSec = baseTotal / multipliers.year;
+            const yearlyTotal = data.data[currentYear][mode].total;
+            const basePerSec = yearlyTotal / multipliers.year;
 
-            // Логіка лічильника
-            let cumulative = (currentYear === "2026") ? secondsPassed * basePerSec : baseTotal;
+            // Логіка лічильника накопичення
+            let cumulative = (currentYear === "2026") ? secondsPassed * basePerSec : yearlyTotal;
             if (currentYear === "2026") {
                 drift[side] += (Math.random() - 0.5) * 0.002;
                 drift[side] = Math.max(0.95, Math.min(drift[side], 1.05));
@@ -174,24 +175,19 @@ function startTickers() {
 
             const rate = basePerSec * drift[side] * multipliers[currentTimeUnit];
             
-            // Оновлення тексту
+            // Оновлення текстових значень
             document.getElementById(`${side}Name`).innerText = data.name;
             document.getElementById(`${side}Icon`).src = data.image;
             document.getElementById(`${side}Rate`).innerText = (['sec', 'min'].includes(currentTimeUnit)) ? rateFormatter.format(rate) : wholeFormatter.format(rate);
             document.getElementById(`${side}Cumulative`).innerText = wholeFormatter.format(cumulative);
             document.getElementById(`${side}Unit`).innerText = window.langUnits ? window.langUnits[currentTimeUnit] : `/${currentTimeUnit}`;
 
-            // --- ВІЗУАЛІЗАЦІЯ (ГРАФІК) ---
+            // --- ВІЗУАЛІЗАЦІЯ (ГРАФІК СТОВПЧИКАМИ) ---
             const visualizer = document.getElementById(`${side}Visualizer`);
             if (visualizer) {
-                // Створюємо стовпчики, якщо їх немає
+                // Створюємо 12 стовпчиків-скелетів, якщо їх ще немає
                 if (visualizer.children.length !== 12) {
-                    visualizer.innerHTML = ''; 
-                    for (let i = 0; i < 12; i++) {
-                        const col = document.createElement('div');
-                        col.className = 'bar-column';
-                        visualizer.appendChild(col);
-                    }
+                    visualizer.innerHTML = Array(12).fill('<div class="bar-column"></div>').join('');
                 }
 
                 const columns = visualizer.children;
@@ -203,27 +199,30 @@ function startTickers() {
                     const col = columns[i];
                     let heightPercent = 0;
 
+                    // Висота базується на відношенні річної суми об'єкта до глобального максимуму
+                    const baseHeight = (yearlyTotal / globalMax) * 100;
+
                     if (i < currentMonth || currentYear !== "2026") {
-                        // Минулі місяці (або весь минулий рік)
-                        heightPercent = ((i + 1) / 12) * (baseTotal / maxTotal) * 100;
-                        col.classList.add('active');
+                        // Минулі місяці: повна висота для цього місяця
+                        heightPercent = ((i + 1) / 12) * baseHeight;
+                        col.className = 'bar-column active';
                     } else if (i === currentMonth && currentYear === "2026") {
-                        // Поточний місяць (росте)
-                        const prevMonthsHeight = (i / 12) * (baseTotal / maxTotal) * 100;
-                        const thisMonthMaxHeight = (1 / 12) * (baseTotal / maxTotal) * 100;
-                        heightPercent = prevMonthsHeight + (thisMonthMaxHeight * monthProgress);
-                        col.classList.add('active');
+                        // Поточний місяць: росте плавно
+                        const prevHeight = (i / 12) * baseHeight;
+                        const thisMonthMax = (1 / 12) * baseHeight;
+                        heightPercent = prevHeight + (thisMonthMax * monthProgress);
+                        col.className = 'bar-column active current';
                     } else {
-                        // Майбутнє (прозоре)
-                        heightPercent = 0;
-                        col.classList.remove('active');
+                        // Майбутні місяці: напівпрозорий "план" (скелет)
+                        heightPercent = ((i + 1) / 12) * baseHeight;
+                        col.className = 'bar-column';
                     }
 
-                    col.style.height = `${Math.max(heightPercent, 1)}%`;
+                    col.style.height = `${Math.max(heightPercent, 2)}%`;
                     
-                    // Стилізація через змінні CSS
+                    // Кольори (без градієнтів, чистий стиль)
                     const color = (mode === 'spending') ? '#ff4d4d' : '#00ff88';
-                    const shadow = (mode === 'spending') ? 'rgba(255, 77, 77, 0.5)' : 'rgba(0, 255, 136, 0.5)';
+                    const shadow = (mode === 'spending') ? 'rgba(255, 77, 77, 0.3)' : 'rgba(0, 255, 136, 0.3)';
                     col.style.setProperty('--accent-color', color);
                     col.style.setProperty('--accent-shadow', shadow);
                 }
