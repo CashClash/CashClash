@@ -299,7 +299,7 @@ nav button.active { background: var(--text-main); color: var(--bg-color); }
 @media (min-width: 900px) {
     h1 { 
     font-size: 18px; 
-    color: var(--text-main); 
+    color: var(--text-dim); 
     letter-spacing: 4px;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
