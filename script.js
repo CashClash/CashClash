@@ -47,7 +47,6 @@ async function loadLanguage(lang) {
         ]);
         financialData.left = nasa;
         financialData.right = musk;
-        calculateGlobalMaxes();
         applyMainTexts(main);
         renderLangSelector();
         updateUI();
@@ -244,7 +243,6 @@ function setupEventListeners() {
             document.querySelectorAll('#yearSelector button').forEach(b => b.classList.remove('active'));
             e.target.classList.add('active');
             currentYear = e.target.innerText;
-            calculateGlobalMaxes();
             updateUI();
         }
     });
