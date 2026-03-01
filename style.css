@@ -100,7 +100,49 @@ nav button.active { background: var(--text-main); color: var(--bg-color); }
 .card.spending { border-top: 3px solid var(--red-accent); }
 .card.income { border-top: 3px solid var(--green-accent); }
 
-.card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.card-header { position: relative; cursor: pointer; border-radius: 8px; transition: background 0.2s; padding: 5px; }
+.card-header:hover { background: rgba(255,255,255,0.05); }
+
+.name-wrapper { display: flex; align-items: center; gap: 8px; }
+.selector-arrow { font-size: 10px; opacity: 0.5; }
+
+.entity-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    display: none;
+    flex-direction: column;
+    z-index: 2000;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    max-height: 300px;
+    overflow-y: auto;
+}
+.entity-dropdown.active { display: flex; }
+
+.category-group { padding: 5px 0; }
+.category-name { 
+    padding: 8px 12px; 
+    font-size: 10px; 
+    text-transform: uppercase; 
+    color: var(--text-dim); 
+    font-weight: bold;
+    background: rgba(0,0,0,0.1);
+}
+
+.entity-item { 
+    padding: 10px 15px; 
+    font-size: 13px; 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    transition: 0.2s; 
+}
+.entity-item:hover { background: var(--nav-btn-bg); color: var(--green-accent); }
+.entity-item img { width: 20px; height: 20px; border-radius: 4px; }
 .entity-icon { width: 32px; height: 32px; border-radius: 6px; background: white; padding: 2px; }
 .entity-name { font-size: 13px; font-weight: bold; }
 
