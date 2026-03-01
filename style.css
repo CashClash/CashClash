@@ -81,7 +81,11 @@ nav button {
 nav button.active { background: var(--text-main); color: var(--bg-color); }
 
 /* Grid & Cards */
-.contrast-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.contrast-grid { 
+    display: grid; 
+    grid-template-columns: 1fr; /* Одна колонка за замовчуванням */
+    gap: 8px; 
+}
 
 .card {
     background: var(--card-bg);
@@ -225,26 +229,18 @@ nav button.active { background: var(--text-main); color: var(--bg-color); }
 /* Самі цифри */
 [id$="Rate"] {
     display: inline-block;
-    text-align: left;        /* Важливо: всередині своєї зони цифри ростуть вправо */
-    min-width: 130px;        /* Резервуємо місце, щоб при зміні з 999 на 1000 нічого не смикалось */
+    text-align: left;
+    min-width: 80px; /* Менше значення для мобільних */
 }
 
 .cumulative { 
     font-family: 'Inter', sans-serif;
-    font-weight: 800; /* Товсті, сочні цифри */
-    
-    /* Вмикаємо режим "кожна цифра = однакова ширина" */
+    font-weight: 800;
     font-variant-numeric: tabular-nums;
-    font-feature-settings: "tnum"; 
-    
-    /* ФІКС ТРЕМТІННЯ: затискаємо число в блок */
     display: inline-block;
-    min-width: 280px; /* Підбери це значення під свій екран */
+    min-width: 100%; /* На мобільних нехай займає весь доступний простір */
+    font-size: 24px; /* Трохи менше для мобілок */
     text-align: center;
-    
-    /* Щоб не було розмиття при анімації */
-    backface-visibility: hidden;
-    transform: translateZ(0);
 }
 .rate-divider {
     width: 30px;
@@ -357,40 +353,50 @@ nav button.active { background: var(--text-main); color: var(--bg-color); }
 .footer-bottom .slogan { margin-top: 5px; opacity: 0.8; font-style: italic; font-size: 12px;}
 
 /* Desktop Adaptivity */
-/* Desktop Adaptivity - Збільшуємо все для моніторів */
+
 @media (min-width: 900px) {
+    .contrast-grid { 
+        grid-template-columns: 1fr 1fr; 
+        gap: 20px; 
+    }
+
     h1 { 
-    font-size: 18px; 
-    color: var(--text-dim); 
-    letter-spacing: 4px;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-}
+        font-size: 18px; 
+        color: var(--text-dim); 
+        letter-spacing: 4px;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+
+    .app-container { padding: 20px; gap: 20px; }
+    .card { padding: 25px; }
+
+    .cumulative { 
+        font-size: 32px; 
+        min-width: 280px; 
+    }
+
     .live-rate .rate-main {
         font-size: 32px;
     }
+
     [id$="Rate"] {
-        min-width: 180px;    /* Більше місця для великих шрифтів */
+        min-width: 180px;
     }
-}
-    .app-container { padding: 20px; gap: 20px; }
-    .contrast-grid { gap: 20px; }
-    .card { padding: 25px; } /* Трохи більше простору всередині карти */
-    .cumulative { font-size: 32px; }
 
     /* Назви (NASA / ELON MUSK) */
     .entity-name { font-size: 20px; } 
     .entity-icon { width: 40px; height: 40px; }
 
-    .subtext { font-size: 11px; } /* Підпис "Накопичено з..." */
+    .subtext { font-size: 11px; }
 
     /* Блок швидкості */
-    .rate-main { font-size: 32px; } /* Було 28px */
-    .live-rate small { font-size: 14px; } /* Підпис "за сек/год" став читабельним */
-    .rate-divider { width: 50px; height: 3px; } /* Робимо лінію помітнішою */
+    .rate-main { font-size: 32px; }
+    .live-rate small { font-size: 14px; }
+    .rate-divider { width: 50px; height: 3px; }
 
-    /* Список деталей (Breakdown) - те, що було найдрібнішим */
+    /* Список деталей (Breakdown) */
     .detail-item { 
-        font-size: 14px; /* Було 10px - тепер не треба мружитись */
+        font-size: 14px;
         gap: 10px;
         padding: 4px 0; 
     }
@@ -400,4 +406,4 @@ nav button.active { background: var(--text-main); color: var(--bg-color); }
     .donate-card h3 { font-size: 22px; }
     .donate-card p { font-size: 16px; }
     .seo-section { font-size: 14px; max-width: 800px; margin: 0; }
-}
+} /* Кінцева дужка медіа
