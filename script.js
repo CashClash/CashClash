@@ -1,11 +1,13 @@
 let currentLang = 'ua';
 const availableLangs = ['ua', 'en']; 
+const entityList = ['nasa', 'elon-musk'];
 let langDataCache = {}; 
 let currentYear = "2026";
 let currentTimeUnit = "sec";
 let cardModes = { left: "spending", right: "income" };
 let financialData = { left: null, right: null };
 let drift = { left: 1, right: 1 };
+let entityCache = {};
 
 const multipliers = {
     sec: 1, min: 60, hour: 3600, day: 86400,
@@ -40,18 +42,74 @@ async function loadLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('lang', lang);
     try {
-        const [main, nasa, musk] = await Promise.all([
-            fetch(`i18n/${lang}/main.json`).then(r => r.json()),
-            fetch(`i18n/${lang}/data/nasa.json`).then(r => r.json()),
-            fetch(`i18n/${lang}/data/elon-musk.json`).then(r => r.json())
-        ]);
-        financialData.left = nasa;
-        financialData.right = musk;
+        const main = await fetch(`i18n/${lang}/main.json`).then(r => r.json());
         applyMainTexts(main);
+        
+        // Завантажуємо дані для всіх сутностей зі списку
+        const entityPromises = entityList.map(id => 
+            fetch(`i18n/${lang}/data/${id}.json`).then(r => r.json())
+        );
+        const entities = await Promise.all(entityPromises);
+        
+        // Зберігаємо в кеш для швидкого перемикання
+        entities.forEach(e => entityCache[e.id] = e);
+
+        // Початковий вибір (якщо ще нічого не вибрано)
+        if (!financialData.left) financialData.left = entityCache['nasa'];
+        if (!financialData.right) financialData.right = entityCache['elon-musk'];
+        
+        // Оновлюємо дані, якщо мова змінилася (беремо свіжі переклади з кешу)
+        financialData.left = entityCache[financialData.left.id];
+        financialData.right = entityCache[financialData.right.id];
+
         renderLangSelector();
+        renderEntityMenus();
         updateUI();
-    } catch (e) { console.error("Error loading language", e); }
+    } catch (e) { console.error("Error loading language/data", e); }
 }
+
+function renderEntityMenus() {
+    // Групуємо сутності за категоріями для "гармошки"
+    const categories = {};
+    Object.values(entityCache).forEach(entity => {
+        if (!categories[entity.category]) categories[entity.category] = [];
+        categories[entity.category].push(entity);
+    });
+
+    ['left', 'right'].forEach(side => {
+        const dropdown = document.getElementById(`${side}EntityMenu`);
+        dropdown.innerHTML = Object.keys(categories).map(cat => `
+            <div class="category-group">
+                <div class="category-name">${cat}</div>
+                ${categories[cat].map(e => `
+                    <div class="entity-item" onclick="selectEntity('${side}', '${e.id}', event)">
+                        <img src="${e.image}">
+                        <span>${e.name}</span>
+                    </div>
+                `).join('')}
+            </div>
+        `).join('');
+    });
+}
+
+function toggleEntityMenu(side, event) {
+    event.stopPropagation();
+    const menu = document.getElementById(`${side}EntityMenu`);
+    const otherMenu = document.getElementById(side === 'left' ? 'rightEntityMenu' : 'leftEntityMenu');
+    otherMenu.classList.remove('active');
+    menu.classList.toggle('active');
+}
+
+function selectEntity(side, id, event) {
+    event.stopPropagation();
+    financialData[side] = entityCache[id];
+    document.getElementById(`${side}EntityMenu`).classList.remove('active');
+    updateUI();
+}
+
+window.addEventListener('click', () => {
+    document.querySelectorAll('.entity-dropdown').forEach(m => m.classList.remove('active'));
+});
 
 function applyMainTexts(main) {
     document.getElementById('mainTitle').innerText = main.ui.title;
