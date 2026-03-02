@@ -10,7 +10,7 @@
             "total": -26480000000,
             "sources": ["Amazon (AMZN) Market Valuation Adjustment", "Scheduled Stock Divestment (Ending May 2026)", "Blue Origin Commercial & NASA Contracts"],
             "breakdown": {
-              "unrealized_market_loss": { "name": "Unrealized Capital Loss (Market Correction)", "percent": 118.4 },
+              "unrealized_market_loss": { "name": "Unrealized Capital Loss (Market Correction)", "percent": -118.4 },
               "realized_liquidity": { "name": "Realized Cash from Scheduled Sales", "percent": 18.4 }
             }
           },
