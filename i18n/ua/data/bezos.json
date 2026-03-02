@@ -16,7 +16,7 @@
         "breakdown": {
           "unrealized_market_loss": {
             "name": "Нереалізований збиток капіталу (ринкова корекція)",
-            "percent": 118.4
+            "percent": -118.4
           },
           "realized_liquidity": {
             "name": "Реалізовані грошові кошти від планових продажів",
