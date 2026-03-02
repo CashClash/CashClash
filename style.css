@@ -85,6 +85,8 @@ nav button.active { background: var(--text-main); color: var(--bg-color); }
     display: grid; 
     grid-template-columns: 1fr 1fr; /* Завжди дві колонки */
     gap: 5px; /* Мінімальний зазор для економії місця */
+    transform: translateZ(0); 
+    -webkit-transform: translateZ(0);
 }
 
 .card {
