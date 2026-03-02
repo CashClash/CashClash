@@ -27,7 +27,7 @@
         },
         "2025": {
           "income": {
-            "total": 65128000000,
+            "total": -65128000000,
             "sources": ["Amazon (AMZN) Equity Appreciation", "SEC Form 144 Stock Divestment", "Blue Origin Government Contracts (NASA/USSF)"],
             "breakdown": {
               "unrealized_capital_gains": { "name": "Unrealized Portfolio Growth", "percent": 84.4 },
