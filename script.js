@@ -220,6 +220,10 @@ function updateUI() {
                 </div>
             `;
         }).join('');
+        const methElement = document.getElementById(`${side}Methodology`);
+        if (methElement && data.data[currentYear].methodology) {
+            methElement.innerText = data.data[currentYear].methodology;
+        }
     });
 }
 
