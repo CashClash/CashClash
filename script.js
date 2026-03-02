@@ -199,11 +199,6 @@ function updateUI() {
         const breakdown = data.data[currentYear][mode].breakdown;
         
         container.innerHTML = Object.values(breakdown).map(item => {
-            // --- РОЗУМНА ЛОГІКА КОЛЬОРУ ---
-            // 1. Якщо ми в режимі витрат (spending) — все червоне.
-            // 2. Якщо в доходах (income): 
-            //    - якщо відсоток мінусовий — червоне (збиток)
-            //    - якщо відсоток плюсовий — зелене (прибуток)
             
             let barColor = 'var(--green-accent)';
             
@@ -211,8 +206,6 @@ function updateUI() {
                 barColor = 'var(--red-accent)';
             }
 
-            // Для відображення тексту використовуємо Math.abs, 
-            // щоб не малювати мінус перед відсотками в інтерфейсі (за бажанням)
             const displayPercent = Math.abs(item.percent);
 
             return `
@@ -271,7 +264,21 @@ function startTickers() {
             document.getElementById(`${side}Name`).innerText = data.name;
             document.getElementById(`${side}Icon`).src = data.image;
             document.getElementById(`${side}Rate`).innerText = (['sec', 'min'].includes(currentTimeUnit)) ? rateFormatter.format(rate) : wholeFormatter.format(rate);
-            document.getElementById(`${side}Cumulative`).innerText = wholeFormatter.format(cumulative);
+            
+            // --- ЛОГІКА КУМУЛЯТИВНОГО ЧИСЛА ТА ПУЛЬСАЦІЇ ---
+            const cumElement = document.getElementById(`${side}Cumulative`);
+            if (cumElement) {
+                cumElement.innerText = wholeFormatter.format(cumulative);
+                
+                // Якщо загальний баланс мінусовий — вмикаємо пульсацію "кровотечі"
+                if (yearlyTotal < 0) {
+                    cumElement.classList.add('bleeding');
+                } else {
+                    cumElement.classList.remove('bleeding');
+                }
+            }
+            // -----------------------------------------------
+            
             document.getElementById(`${side}Unit`).innerText = window.langUnits ? window.langUnits[currentTimeUnit] : `/${currentTimeUnit}`;
 
             // --- НОВА ЛОГІКА ВИБОРУ ЯРЛИКА (Підпис під великим числом) ---
