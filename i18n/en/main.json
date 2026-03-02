@@ -5,7 +5,9 @@
     "short": "EN",
     "spending": "Spend",
     "income": "Income",
-    "cumulative_label": "accumulated since January 1st",
+    "income_label": "accumulated since January 1",
+    "spent_label" : "spent since January 1",
+    "loss_label" : "lost since January 1",
     "units": {
       "sec": "per sec",
       "min": "per min",
