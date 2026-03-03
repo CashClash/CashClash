@@ -98,6 +98,7 @@ nav button.active { background: var(--text-main); color: var(--bg-color); }
     display: flex;
     flex-direction: column;
     transition: transform 0.3s ease, border-color 0.3s ease;
+    position: relative;
 }
 .card:hover {
     transform: translateY(-5px);
@@ -109,7 +110,42 @@ nav button.active { background: var(--text-main); color: var(--bg-color); }
 
 .card-header { position: relative; cursor: pointer; border-radius: 8px; transition: background 0.2s; padding: 5px; }
 .card-header:hover { background: rgba(255,255,255,0.05); }
+.year-badge {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: var(--nav-btn-bg);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 6px;
+    opacity: 0.8;
+    pointer-events: none; /* Щоб не заважала клікам */
+    letter-spacing: 0.5px;
+}
+.year-badge.live-active {
+    color: var(--red-accent);
+    border-color: rgba(255, 77, 77, 0.4);
+    box-shadow: 0 0 10px rgba(255, 77, 77, 0.1);
+}
 
+/* Червона крапка, що миготить */
+.live-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--red-accent);
+    border-radius: 50%;
+    display: inline-block;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.2); }
+    100% { opacity: 1; transform: scale(1); }
+}
 .name-wrapper { display: flex; align-items: center; gap: 8px; }
 .selector-arrow { font-size: 10px; opacity: 0.5; }
 
@@ -474,6 +510,12 @@ nav button.active { background: var(--text-main); color: var(--bg-color); }
         color: var(--text-dim); 
         letter-spacing: 4px;
         text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+    .year-badge {
+        font-size: 12px;
+        padding: 4px 10px;
+        bottom: 15px;
+        right: 15px;
     }
 
     .app-container { padding: 20px; gap: 20px; }
