@@ -292,11 +292,10 @@ function startTickers() {
                 
                 const labelElement = document.getElementById(`${side}CumLabel`);
                 if (labelElement) {
-                    labelElement.innerText = labelText; // Тепер тут просто "ВИТРАЧЕНО" або "ЗАРОБЛЕНО"
+                    labelElement.innerText = labelText; 
                 }
             }
 
-            // --- ДОДАЄМО ТЕГ РОКУ НА КАРТКУ ---
             // --- ДОДАЄМО ТЕГ РОКУ НА КАРТКУ (З ЕФЕКТОМ LIVE) ---
             const card = document.getElementById(`${side}Card`);
             let yearBadge = card.querySelector('.year-badge');
