@@ -3,7 +3,6 @@
       "name": "ELON MUSK",
       "image" : "images/elon-musk.jpeg",
       "category": "person",
-      "color": "#00ff88",
       "data": {
         "2026": {
           "income": {
