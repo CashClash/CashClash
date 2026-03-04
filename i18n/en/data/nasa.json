@@ -3,7 +3,6 @@
       "name": "NASA",
       "image": "images/nasa.svg",
       "category": "government",
-      "color": "#ff4d4d",
       "data": {
         "2026": {
           "income": {
