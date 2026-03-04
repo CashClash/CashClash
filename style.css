@@ -208,6 +208,7 @@ nav button.active { background: var(--text-main); color: var(--bg-color); }
     align-items: center; 
     gap: 10px; 
     transition: 0.2s; 
+    text-transform: uppercase;
 }
 .entity-item:hover { background: var(--nav-btn-bg); color: var(--green-accent); }
 .entity-item img { width: 20px; height: 20px; border-radius: 4px; }
