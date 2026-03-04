@@ -3,7 +3,6 @@
       "name": "JEFFREY  BEZOS",
       "image" : "images/bezos.jpg",
       "category": "person",
-      "color": "#00ff88",
       "data": {
         "2026": {
           "income": {
